@@ -52,7 +52,7 @@ class Mon_50onred extends \yii\bootstrap\Widget
             foreach ($data as $item) {
                 $tabs[] = [
                     'label' => $item->name,
-                    'content' => $item->totals->revenue.' '.$item->totals->daus,
+                    'content' => 'Rev: '.$item->totals->revenue.' DAUs:'.$item->totals->daus,
                 ];
 
             }
