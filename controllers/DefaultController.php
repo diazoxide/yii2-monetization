@@ -37,7 +37,7 @@ class DefaultController extends Controller
             [
                 'class' => 'yii\filters\HttpCache',
                 'only' => ['conversion'],
-                'cacheControlHeader' =>'nocache',
+                'cacheControlHeader' => 'nocache',
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -102,7 +102,27 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
-        //if($model->)
+        if ($model->api_token_50onred) {
+            \Fifty\PublisherAPI\API::setApiKey($model->api_token_50onred);
+            $parameters = array(
+//                'filters' => array(
+//                    'zone' => array('example_zone_name'), //Optional
+//                    'geo' => array('US', 'CA'), //Optional
+//                    'monetization' => array('Banners', 'CA') //Optional
+//                ),
+                'group_by' => array('monetization', 'date'), //Optional
+                'start_date' => '2019-02-01', //Required
+                'end_date' => '2019-02-10', //Required
+                'pubtype' => 'js' //Required
+            );
+
+            $report = \Fifty\PublisherAPI\Report::custom($parameters); // returns a `SplFileObject`
+
+            while (!$report->eof()) {
+                var_dump($report->fgetcsv());
+            }
+
+        }
         $conversionSearchModel = new ConversionSearch();
         $conversionSearchModel->monetization_id = $id;
         $conversionDataProvider = $conversionSearchModel->search(Yii::$app->request->queryParams);
@@ -153,11 +173,12 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function stopPercent($percent){
+    public function stopPercent($percent)
+    {
 
-        $a = 60 * $percent/100;
+        $a = 60 * $percent / 100;
         $s = date('s');
-        if($s > $a){
+        if ($s > $a) {
             return true;
         }
     }
