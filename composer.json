@@ -29,7 +29,8 @@
     "rmrevin/yii2-fontawesome": "~3.0",
     "matthiasmullie/minify": "^1.3",
     "trntv/yii2-aceeditor": "^2.1",
-    "kartik-v/yii2-date-range": "dev-master"
+    "kartik-v/yii2-date-range": "dev-master",
+    "50onred/publisher-api": "2.*"
   },
   "autoload": {
     "psr-4": {
