@@ -17,6 +17,7 @@ use voskobovich\behaviors\ManyToManyBehavior;
  * @property User $user
  * @property Types $types
  * @property string $accountUrl
+ * @property string $api_token_50onred
  */
 class Monetization extends \yii\db\ActiveRecord
 {
@@ -39,7 +40,7 @@ class Monetization extends \yii\db\ActiveRecord
 
             [['user_id'], 'required'],
             [['user_id', 'enabled'], 'integer'],
-            [['note', 'name', '50onred_api_token'], 'string', 'max' => 255],
+            [['note', 'name', 'api_token_50onred'], 'string', 'max' => 255],
         ];
     }
 

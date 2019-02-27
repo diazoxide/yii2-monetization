@@ -23,7 +23,6 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, '50onred_api_token')->textInput(['maxlength' => 255]) ?>
 
-
     <?= $form->field($model, 'note')->textInput(['maxlength' => 255]) ?>
 
 

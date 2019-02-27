@@ -102,6 +102,7 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
+        //if($model->)
         $conversionSearchModel = new ConversionSearch();
         $conversionSearchModel->monetization_id = $id;
         $conversionDataProvider = $conversionSearchModel->search(Yii::$app->request->queryParams);
