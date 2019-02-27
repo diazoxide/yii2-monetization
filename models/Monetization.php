@@ -4,7 +4,7 @@ namespace diazoxide\yii2monetization\models;
 
 //use app\models\User;
 use dektrium\user\models\User;
-use Yii;
+use voskobovich\behaviors\ManyToManyBehavior;
 
 /**
  * This is the model class for table "{{%monetization}}".
@@ -34,11 +34,12 @@ class Monetization extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            // ManyToManyBehavior requirement
             [['types_ids'], 'each', 'rule' => ['integer']],
 
             [['user_id'], 'required'],
             [['user_id', 'enabled'], 'integer'],
-            [['note', 'name'], 'string', 'max' => 255],
+            [['note', 'name', '50onred_api_token'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,7 +47,7 @@ class Monetization extends \yii\db\ActiveRecord
     {
         return [
             [
-                'class' => \voskobovich\behaviors\ManyToManyBehavior::className(),
+                'class' => ManyToManyBehavior::className(),
                 'relations' => [
                     'types_ids' => 'types',
                 ],

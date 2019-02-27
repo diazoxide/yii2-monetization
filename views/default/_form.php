@@ -14,12 +14,15 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\dektrium\user\models\User::find()->all(), 'id', 'username'),[
+    <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\dektrium\user\models\User::find()->all(), 'id', 'username'), [
         'prompt' => 'Select User'
     ]) ?>
 
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
+
+    <?= $form->field($model, '50onred_api_token')->textInput(['maxlength' => 255]) ?>
+
 
     <?= $form->field($model, 'note')->textInput(['maxlength' => 255]) ?>
 

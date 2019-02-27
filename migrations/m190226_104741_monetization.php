@@ -22,6 +22,7 @@ class m190226_104741_monetization extends Migration
                 'id'=> $this->primaryKey(11),
                 'user_id'=> $this->integer(11)->notNull(),
                 'name'=> $this->string(255)->notNull(),
+                '50onred_api_token'=> $this->string(255)->notNull(),
                 'enabled'=> $this->tinyInteger(1)->notNull(),
                 'note'=> $this->string(255)->notNull(),
             ],$tableOptions
