@@ -18,13 +18,11 @@ use yii\helpers\ArrayHelper;
         'prompt' => 'Select User'
     ]) ?>
 
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'api_token_50onred	')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'note')->textInput(['maxlength' => 255]) ?>
-
 
     <?= $form->field($model, 'types_ids')->checkboxlist(ArrayHelper::map(\diazoxide\yii2monetization\models\Types::find()->all(), 'id', 'name'), ['separator' => '</br>']); ?>
 
