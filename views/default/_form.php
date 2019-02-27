@@ -14,7 +14,9 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'user_id')->dropDownList(ArrayHelper::map(\dektrium\user\models\User::find()->all(), 'id', 'username'),[
+        'prompt' => 'Select User'
+    ]) ?>
 
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
@@ -22,7 +24,7 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'note')->textInput(['maxlength' => 255]) ?>
 
 
-    <?= $form->field($model, 'types_ids')->checkboxlist(ArrayHelper::map(\diazoxide\yii2monetization\models\Types::find()->all(), 'id', 'name'),['separator'=>'</br>']);?>
+    <?= $form->field($model, 'types_ids')->checkboxlist(ArrayHelper::map(\diazoxide\yii2monetization\models\Types::find()->all(), 'id', 'name'), ['separator' => '</br>']); ?>
 
     <?= $form->field($model, 'enabled')->checkbox() ?>
 
