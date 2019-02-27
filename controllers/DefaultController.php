@@ -13,6 +13,7 @@ use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\filters\AccessControl;
+use yii\httpclient\Client;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -101,29 +102,6 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->api_token_50onred) {
-            \Fifty\PublisherAPI\API::setApiKey($model->api_token_50onred);
-            $parameters = array(
-//                'filters' => array(
-//                    'zone' => array('example_zone_name'), //Optional
-//                    'geo' => array('US', 'CA'), //Optional
-//                    'monetization' => array('Banners', 'CA') //Optional
-//                ),
-                'group_by' => array('monetization', 'date'), //Optional
-                'start_date' => '2019-02-01', //Required
-                'end_date' => '2019-02-10', //Required
-                'pubtype' => 'js', //Required
-                'return_format'=>'json',
-            );
-
-            $report = \Fifty\PublisherAPI\Report::custom($parameters); // returns a `SplFileObject`
-
-            while (!$report->eof()) {
-                var_dump($report->fgetcsv());
-            }
-
-        }
         $conversionSearchModel = new ConversionSearch();
         $conversionSearchModel->monetization_id = $id;
         $conversionDataProvider = $conversionSearchModel->search(Yii::$app->request->queryParams);

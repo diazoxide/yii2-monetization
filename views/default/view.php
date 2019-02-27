@@ -55,9 +55,9 @@ $monetizationModel = $model;
         $attributes[] = [
             'label' => $type->name,
             'format' => 'raw',
-            'value' => function ($model) use ($type,$monetizationModel) {
+            'value' => function ($model) use ($type, $monetizationModel) {
                 $str = '';
-                if(Yii::$app->user->can('configMonetizationType')) {
+                if (Yii::$app->user->can('configMonetizationType')) {
                     $str .= Html::a('Config',
                             ['/monetization/types/config', 'id' => $type->id, 'monetization' => $monetizationModel->id],
                             ['class' => 'label label-primary']) . ' ';
@@ -68,18 +68,18 @@ $monetizationModel = $model;
                 /** @var \diazoxide\yii2monetization\models\TypesConfig $config */
                 $config = $type->getConfig($monetizationModel->id);
                 $price = null;
-                $str .= Html::tag('span',$count,['class' => 'label label-warning']).' ';
+                $str .= Html::tag('span', $count, ['class' => 'label label-warning']) . ' ';
 
-                if($config) {
+                if ($config) {
                     if (!$config->price) {
                         return $str;
                     }
-                    $price = $config->getPriceFormatted($count,3);
+                    $price = $config->getPriceFormatted($count, 3);
                 }
 
-                if(Yii::$app->user->can('viewMonetizationAmount') || Yii::$app->user->can('viewOwnMonetizationAmount', ['model' => $monetizationModel])){
-                    if($price) {
-                        $str .= Html::tag('span',$price,['class' => 'label label-success']);
+                if (Yii::$app->user->can('viewMonetizationAmount') || Yii::$app->user->can('viewOwnMonetizationAmount', ['model' => $monetizationModel])) {
+                    if ($price) {
+                        $str .= Html::tag('span', $price, ['class' => 'label label-success']);
                     }
                 }
 
@@ -95,7 +95,11 @@ $monetizationModel = $model;
     ]) ?>
 
 
-    <?php if(Yii::$app->user->can('viewMonetizationPixels') || Yii::$app->user->can('viewOwnMonetizationPixels', ['model' => $model])) foreach ($model->types as $type) {
+    <?= \diazoxide\yii2monetization\widgets\Mon_50onred::widget([
+        'api_token' => $model->api_token_50onred
+    ]) ?>
+
+    <?php if (Yii::$app->user->can('viewMonetizationPixels') || Yii::$app->user->can('viewOwnMonetizationPixels', ['model' => $model])) foreach ($model->types as $type) {
         echo Html::tag("h4", $type->name . ' conversion link');
         echo Alert::widget([
             'options' => [
@@ -116,17 +120,17 @@ $monetizationModel = $model;
         [
             'attribute' => 'signDateRange',
             'filter' => DateRangePicker::widget([
-                    'model'=>$conversionSearchModel,
-                    'attribute'=>'signDateRange',
-                    'convertFormat'=>true,
-                    'pluginOptions'=>[
-                        'timePicker'=>true,
-                        'timePickerIncrement'=>30,
-                        'locale'=>[
-                            'format'=>'Y-m-d H:i:s'
-                        ]
+                'model' => $conversionSearchModel,
+                'attribute' => 'signDateRange',
+                'convertFormat' => true,
+                'pluginOptions' => [
+                    'timePicker' => true,
+                    'timePickerIncrement' => 30,
+                    'locale' => [
+                        'format' => 'Y-m-d H:i:s'
                     ]
-                ]),
+                ]
+            ]),
             'format' => 'raw',
             'value' => function ($model) {
                 return Html::tag('span', Yii::$app->formatter->asRelativeTime($model->sign_date), ['class' => 'label label-default', 'data-toggle' => "tooltip", 'title' => $model->sign_date]);
@@ -185,22 +189,22 @@ $monetizationModel = $model;
         $columns[] = [
             'label' => $type->name,
             'format' => 'raw',
-            'value' => function ($model) use ($type,$monetizationModel) {
+            'value' => function ($model) use ($type, $monetizationModel) {
                 $count = \diazoxide\yii2monetization\models\ConversionActions::find()->andWhere(['conversion_id' => $model->id, 'type_id' => $type->id])->count();
 
                 $config = $type->getConfig($monetizationModel->id);
                 $price = null;
-                if($config) {
+                if ($config) {
                     if (!$config->price) {
                         return $count;
                     }
-                    $price = $config->getPriceFormatted($count,3);
+                    $price = $config->getPriceFormatted($count, 3);
                 }
 
                 $str = $count;
-                if(Yii::$app->user->can('viewMonetizationAmount') || Yii::$app->user->can('viewOwnMonetizationAmount', ['model' => $monetizationModel])){
-                    if($price)
-                        $str.=' - '.$price;
+                if (Yii::$app->user->can('viewMonetizationAmount') || Yii::$app->user->can('viewOwnMonetizationAmount', ['model' => $monetizationModel])) {
+                    if ($price)
+                        $str .= ' - ' . $price;
                 }
                 return $str;
             }
