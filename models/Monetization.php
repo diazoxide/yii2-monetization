@@ -2,7 +2,8 @@
 
 namespace diazoxide\yii2monetization\models;
 
-use app\models\User;
+//use app\models\User;
+use dektrium\user\models\User;
 use Yii;
 
 /**
@@ -95,6 +96,7 @@ class Monetization extends \yii\db\ActiveRecord
 
     /**
      * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getTypes()
     {
