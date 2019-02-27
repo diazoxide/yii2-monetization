@@ -113,7 +113,8 @@ class DefaultController extends Controller
                 'group_by' => array('monetization', 'date'), //Optional
                 'start_date' => '2019-02-01', //Required
                 'end_date' => '2019-02-10', //Required
-                'pubtype' => 'js' //Required
+                'pubtype' => 'js', //Required
+                'return_format'=>'json',
             );
 
             $report = \Fifty\PublisherAPI\Report::custom($parameters); // returns a `SplFileObject`
