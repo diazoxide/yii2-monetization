@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
  */
 class Module extends \yii\base\Module
 {
+    public $_50onred_access_token;
     /**
      * {@inheritdoc}
      */
