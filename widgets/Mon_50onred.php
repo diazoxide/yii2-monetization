@@ -1,5 +1,7 @@
 <?php
+
 namespace diazoxide\yii2monetization\widgets;
+
 use yii\bootstrap\Tabs;
 use yii\httpclient\Client;
 use yii\widgets\DetailView;
@@ -29,7 +31,7 @@ class Mon_50onred extends \yii\bootstrap\Widget
             "access_token" => $this->api_token,
             "date_start" => "2019-01-01",
             "date_end" => "2019-01-10",
-            "nochildren" => 'true',
+            //"nochildren" => 'true',
             "category" => "true",
         ];
         $response = $client->createRequest()
@@ -47,12 +49,12 @@ class Mon_50onred extends \yii\bootstrap\Widget
 //            echo "<pre style='margin-top:200px'>";
 //            print_r($data);
 //            echo "</pre>";
-
+//
 
             foreach ($data as $item) {
                 $tabs[] = [
                     'label' => $item->name,
-                    'content' => 'Rev: '.$item->totals->revenue.' DAUs:'.$item->totals->daus,
+                    'content' => $this->render('_mon_50onred', ['model' => $item]),
                 ];
 
             }
