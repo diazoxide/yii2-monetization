@@ -23,6 +23,7 @@
     "dektrium/yii2-user": "^0.9.14",
     "dektrium/yii2-rbac": "^1.0",
     "bower-asset/chartist": "*",
+    "bower-asset/chartist-plugin-tooltip": "*",
     "voskobovich/yii2-many-many-behavior": "~3.0",
     "lysenkobv/yii2-geoip": "~1.0",
     "nox-it/yii2-nox-user-agent-parser": "*",

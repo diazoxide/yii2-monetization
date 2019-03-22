@@ -5,6 +5,7 @@ namespace diazoxide\yii2monetization\widgets;
 use DateInterval;
 use DatePeriod;
 use DateTime;
+use diazoxide\yii2monetization\assets\ChartistAsset;
 use Yii;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
@@ -24,6 +25,8 @@ class Mon_50onred extends \yii\bootstrap\Widget
     public $pubtype = 'js';
     public $date_group_by = 'day';
     public $group_by = ['zone'];
+
+    public $data;
 
     protected $_dateStart;
     protected $_dateEnd;
@@ -47,6 +50,8 @@ class Mon_50onred extends \yii\bootstrap\Widget
             'transport' => 'yii\httpclient\CurlTransport' // only cURL supports the options we need
         ]);
 
+        ChartistAsset::register($this->getView());
+
         $this->_params = [
             'filters' => [
                 'zone' => explode(',', $this->zone), //Optional
@@ -64,28 +69,16 @@ class Mon_50onred extends \yii\bootstrap\Widget
 
         $this->_url = 'https://pubapi.50onred.com/v2/report?' . http_build_query($this->_params);
 
-        $data = $this->sendRequest();
+        $this->data = $this->sendRequest();
+
 
         $this->renderForm();
 
-        print_r($data);
+        $this->renderChart();
 
-        /*$js = <<<JS
-    alert('{$this->_url}');
+//        print_r($this->data);
 
-$.ajax({
-    type: "GET",
-    dataType: "jsonp",
-    url: "{$this->_url}",
-    complete: function(data) {
-        console.log(data.responseText);
-    }
-});
-
-JS;
-
-        $this->view->registerJs($js);*/
-//        $tabs = [];
+        //        $tabs = [];
 //
 //        $data = $this->sendRequest();
 //        foreach ($data as $item) {
@@ -102,6 +95,44 @@ JS;
 //            'items' => $tabs
 //        ]);
         parent::init();
+    }
+
+    /**
+     *
+     */
+    public function renderChart()
+    {
+
+        echo Html::tag('div', '', ['class' => 'chart']);
+        $labels = [];
+        $series = [];
+        foreach($this->data as $item){
+            if(isset($item['date_name'])){
+                $labels[] = $item['date_name'];
+                $series[0][] = ['value'=>$item['revenue'],'meta'=>$item['revenue']];
+            }
+        }
+        $config = [
+            'labels'=>$labels,
+            'series'=>$series,
+        ];
+        $data = json_encode($config);
+
+        $js = <<<JS
+new Chartist.Line('.chart', {$data}, {
+  fullWidth: true,
+  showArea: true,
+  plugins: [
+    Chartist.plugins.tooltip()
+  ],
+  chartPadding: {
+    right: 40,
+  }
+});
+
+JS;
+        $this->view->registerJs($js);
+
     }
 
     private function setDates()
