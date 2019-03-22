@@ -5,4 +5,5 @@
       <path value="D:/Projects/Libraries/php/yii2/vendor" />
     </include_path>
   </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="5.4.0" />
 </project>

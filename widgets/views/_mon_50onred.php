@@ -20,8 +20,8 @@ use yii\bootstrap\Tabs;
 
                 <?php foreach ($geo as $type => $geoItem): ?>
                     <td><strong><?= $type ?></strong></td>
-                    <td><?= $geoItem->revenue ?></td>
-                    <td><?= $geoItem->daus ?></td>
+                    <td>Rev: <?= $geoItem->revenue ?></td>
+                    <td>DAU: <?= $geoItem->daus ?></td>
                 <?php endforeach; ?>
 
 
