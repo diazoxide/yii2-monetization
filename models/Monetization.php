@@ -4,6 +4,8 @@ namespace diazoxide\yii2monetization\models;
 
 //use app\models\User;
 use dektrium\user\models\User;
+use paulzi\jsonBehavior\JsonBehavior;
+use paulzi\jsonBehavior\JsonValidator;
 use voskobovich\behaviors\ManyToManyBehavior;
 
 /**
@@ -37,6 +39,7 @@ class Monetization extends \yii\db\ActiveRecord
         return [
             // ManyToManyBehavior requirement
             [['types_ids'], 'each', 'rule' => ['integer']],
+            [['api_50onred'], JsonValidator::className()],
 
             [['user_id'], 'required'],
             [['user_id', 'enabled'], 'integer'],
@@ -52,6 +55,10 @@ class Monetization extends \yii\db\ActiveRecord
                 'relations' => [
                     'types_ids' => 'types',
                 ],
+            ],
+            [
+                'class' => JsonBehavior::className(),
+                'attributes' => ['api_50onred'],
             ],
         ];
     }

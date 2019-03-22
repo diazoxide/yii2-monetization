@@ -21,6 +21,12 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'api_token_50onred')->textInput(['maxlength' => 255]) ?>
+    <h1>50onred</h1>
+    <?= $form->field($model, 'api_50onred[token]')->textInput(['maxlength' => 255])->label('API Key') ?>
+
+    <?= $form->field($model, 'api_50onred[zone]')->textInput(['maxlength' => 255])->label('Zone') ?>
+
+    <?= $form->field($model, 'api_50onred[monetization]')->textInput(['maxlength' => 255])->label('Monetization') ?>
 
     <?= $form->field($model, 'note')->textInput(['maxlength' => 255]) ?>
 

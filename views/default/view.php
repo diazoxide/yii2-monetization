@@ -95,9 +95,10 @@ $monetizationModel = $model;
     ]) ?>
 
 
-    <?= \diazoxide\yii2monetization\widgets\Mon_50onred::widget([
-        'api_token' => $model->api_token_50onred
-    ]) ?>
+    <?php
+    $config = (array)$model->api_50onred;
+    echo \diazoxide\yii2monetization\widgets\Mon_50onred::widget(reset($config));
+    ?>
 
     <?php if (Yii::$app->user->can('viewMonetizationPixels') || Yii::$app->user->can('viewOwnMonetizationPixels', ['model' => $model])) foreach ($model->types as $type) {
         echo Html::tag("h4", $type->name . ' conversion link');

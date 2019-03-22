@@ -17,10 +17,10 @@ use kartik\daterange\DateRangePicker;
  */
 class Mon_50onred extends \yii\bootstrap\Widget
 {
-    public $api_token;
+    public $token;
     public $default_interval = '3 day';
-    public $zone = ['yurpsm'];
-    public $monetization = ['Pops'];
+    public $zone = 'yurpsm';
+    public $monetization = 'Pops';
     public $pubtype = 'js';
     public $date_group_by = 'day';
     public $group_by = ['zone'];
@@ -47,11 +47,11 @@ class Mon_50onred extends \yii\bootstrap\Widget
             'transport' => 'yii\httpclient\CurlTransport' // only cURL supports the options we need
         ]);
 
-        $this->_params  = [
+        $this->_params = [
             'filters' => [
-                'zone' => $this->zone, //Optional
+                'zone' => explode(',', $this->zone), //Optional
 //                'country' => array('US', 'CA'), //Optional
-                'monetization' => $this->monetization, //Optional
+                'monetization' => explode(',', $this->monetization), //Optional
             ],
 //            'thresholds' => array('daus > 1000'),
             'group_by' => $this->group_by, //Optional
@@ -130,23 +130,22 @@ JS;
 
     }
 
-    public function csvToArray($str){
-        $lines = explode( "\n", $str );
-        $headers = str_getcsv( array_shift( $lines ) );
+    public function csvToArray($str)
+    {
+        $lines = explode("\n", $str);
+        $headers = str_getcsv(array_shift($lines));
         $data = array();
-        foreach ( $lines as $line ) {
+        foreach ($lines as $line) {
             $row = array();
-            foreach ( str_getcsv( $line ) as $key => $field )
-                $row[ $headers[ $key ] ] = $field;
-            $row = array_filter( $row );
+            foreach (str_getcsv($line) as $key => $field)
+                $row[$headers[$key]] = $field;
+            $row = array_filter($row);
             $data[] = $row;
         }
         return $data;
     }
 
     /**
-     * @param $dateStart
-     * @param $dateEnd
      * @return bool|mixed
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\httpclient\Exception
@@ -157,18 +156,18 @@ JS;
             ->setMethod('get')
             ->setUrl($this->_url)
             ->setFormat(Client::FORMAT_RAW_URLENCODED)
-            ->addHeaders(['Authorization' => 'Basic ' . base64_encode($this->api_token . ":")])
+            ->addHeaders(['Authorization' => 'Basic ' . base64_encode($this->token . ":")])
             ->setOptions([
                 CURLOPT_FOLLOWLOCATION => true, // connection timeout
             ])
             ->send();
-        echo $response->statusCode;
 
         if ($response->isOk) {
 //            print_r($response->content);
             $data = $this->csvToArray($response->content);
             return $data;
         }
+
         return false;
     }
 
